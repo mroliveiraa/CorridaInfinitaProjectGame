@@ -1,9 +1,8 @@
 
 package corridainfinitagame;
 
-import MapasFases.Mapa1;
+import MapasFases.TelaInicial;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.PopupMenu;
 import javax.swing.JFrame;
 
@@ -13,11 +12,11 @@ public class Janela extends JFrame {
       
     //construtor
    public Janela (){
-   add (new Mapa1 ());
+   add (new TelaInicial ());
    setLayout(new BorderLayout());
-   add(new Mapa1(), BorderLayout.CENTER);
+   add(new TelaInicial(), BorderLayout.CENTER);
 
-   setTitle ("Run to Program");
+   setTitle ("Run the Program");
    setSize(1280,720);
    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // fechar o jogo no x 
    setLocationRelativeTo (null);//centralizar
