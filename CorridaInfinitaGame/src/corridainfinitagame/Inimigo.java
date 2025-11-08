@@ -9,5 +9,5 @@ package corridainfinitagame;
  * @author matte
  */
 public class Inimigo {
-    
+    int inimigo;
 }
