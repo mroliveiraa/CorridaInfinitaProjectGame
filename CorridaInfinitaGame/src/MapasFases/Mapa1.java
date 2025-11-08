@@ -15,6 +15,7 @@ public class Mapa1 extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout (null);
+        setVisible (true);
         
  
     
