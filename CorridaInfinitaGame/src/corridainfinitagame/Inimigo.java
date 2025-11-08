@@ -10,4 +10,6 @@ package corridainfinitagame;
  */
 public class Inimigo {
     int inimigo;
+    int teste;
+    
 }
