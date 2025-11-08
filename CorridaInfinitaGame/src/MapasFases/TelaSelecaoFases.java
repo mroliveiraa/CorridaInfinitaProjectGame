@@ -2,7 +2,7 @@
 package MapasFases;
 import java.awt.Font;
 import javax.swing.*;
-
+//author @Mateus Ribeiro
 public class TelaSelecaoFases extends JFrame {
     public TelaSelecaoFases (){
       setTitle ("Selecione o Mapa");

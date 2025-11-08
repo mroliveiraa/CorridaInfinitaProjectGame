@@ -4,7 +4,7 @@ package corridainfinitagame;
 import MapasFases.TelaInicial;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
-
+//author @Mateus Ribeiro
 public class Janela extends JFrame {
     //atributos
     

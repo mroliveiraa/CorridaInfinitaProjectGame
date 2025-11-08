@@ -5,7 +5,7 @@ import MapasFases.TelaSelecaoFases;
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.URL;
-
+//author @Mateus Ribeiro
 
 public class TelaSelecaoPersonagem extends JFrame {
     public TelaSelecaoPersonagem (){
