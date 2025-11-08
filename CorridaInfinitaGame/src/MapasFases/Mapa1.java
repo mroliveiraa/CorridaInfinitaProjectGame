@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class Mapa1 extends JFrame{
      public Mapa1 (){
-        setTitle ("Selecione o Personagem");
+        setTitle ("Mapa 1");
         setSize (1280,720);
         setLayout (null);
         setResizable(false);
