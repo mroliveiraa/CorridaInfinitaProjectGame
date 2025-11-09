@@ -1,6 +1,8 @@
 
 package MapasFases;
 
+import Mecanicas.PainelJogo;
+import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 //author @Mateus Ribeiro
@@ -15,7 +17,12 @@ public class Mapa1 extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout (null);
-        setVisible (true);
+       
+        
+         PainelJogo painel = new PainelJogo ();
+         setContentPane(painel);
+        
+         setVisible (true);
         
  
     
