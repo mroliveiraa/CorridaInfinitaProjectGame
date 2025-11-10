@@ -21,6 +21,8 @@ public class Mapa1 extends JFrame{
         
          PainelJogo painel = new PainelJogo ();
          setContentPane(painel);
+         
+         
         
          setVisible (true);
         

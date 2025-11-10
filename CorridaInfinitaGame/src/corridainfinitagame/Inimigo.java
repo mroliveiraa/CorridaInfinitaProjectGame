@@ -12,7 +12,7 @@ public class Inimigo {
     private int largura, altura;
     private boolean visivel = true;
     private int velocidade;
-
+   
     public Inimigo(int x, int y, int velocidadeCenario) {
         this.x = x;
         this.y = y;
@@ -23,10 +23,10 @@ public class Inimigo {
 
     private void carregarImagemAleatoria() {
         String[] imagens = {
-            "res/worm.png",
-            "res/virus.png",
-            "res/virus2.png",
-            "res/CavaloTroia.png"
+            "src/res/worm.png",
+            "src/res/virus.png",
+            "src/res/virus2.png",
+            "src/res/CavaloTroia.png"
         };
 
         Random random = new Random();
@@ -34,8 +34,8 @@ public class Inimigo {
 
         ImageIcon referencia = new ImageIcon(caminhoEscolhido);
         imagem = referencia.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        this.altura = 80;
-        this.largura = 80;
+        this.altura = 50;
+        this.largura = 50;
     }
 
     public void moverComCenario(int velocidadeCenario) {

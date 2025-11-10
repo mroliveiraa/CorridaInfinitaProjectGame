@@ -21,7 +21,7 @@ public class TelaInicial extends JPanel {
         setLayout (null);
          URL local = getClass ().getResource("/res/TituloAnimado.gif");
             
-       ImageIcon tituloAnimado = new ImageIcon (local);
+             ImageIcon tituloAnimado = new ImageIcon (local);
              JLabel tituloInicio = new JLabel (tituloAnimado);
              tituloInicio.setBounds (300,100, tituloAnimado.getIconWidth(), tituloAnimado.getIconHeight());
              add (tituloInicio);

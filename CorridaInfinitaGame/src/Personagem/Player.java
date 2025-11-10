@@ -13,15 +13,20 @@ public class Player {
     private boolean estaPulando; //Estado
     private final int distanciaChao = 400; //altura do solo após pular
     
+    
+            
+    
     //construtor
     public Player (int startX, int startY){
     this.x  = startX;
     this.y = startY;
     this.velocidadeY = 0;  //velocidade do pulo
     this.estaPulando = false;
-    //inicia na posição 
+     
     }
     
+    
+    //inicia na posição
     public void Update() {
         if (estaPulando) {
             velocidadeY += 1; //gravidade do pulo
@@ -40,7 +45,7 @@ public class Player {
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
-                    velocidadeY = -15; //velocidade do pulo negativa para acrescentar no pulo
+                    velocidadeY = -20; //velocidade do pulo negativa para acrescentar no pulo
                    }   
                 }
                 public void imprimirPersonagem (Graphics g){ 

@@ -4,6 +4,9 @@ import java.awt.Font;
 import javax.swing.*;
 //author @Mateus Ribeiro
 public class TelaSelecaoFases extends JFrame {
+    
+    ImageIcon icone1 = new ImageIcon("src/res/BotãoMapa1.png");
+    
     public TelaSelecaoFases (){
       setTitle ("Selecione o Mapa");
         setSize (1280,720);
@@ -21,7 +24,9 @@ public class TelaSelecaoFases extends JFrame {
         
         JButton btn_mapa1 = new JButton ();
         btn_mapa1.setBounds(250, 125, 350, 200);
+        btn_mapa1.setIcon(icone1);
         add (btn_mapa1);
+        
         
         JButton btn_mapa2 = new JButton ();
         btn_mapa2.setBounds(700, 125, 350, 200);
