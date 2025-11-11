@@ -1,62 +1,80 @@
-
 package Personagem;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Player {
-    
-   //atributos    
-    private int x,y; //posição
-    private int velocidadeY; //velocidade do pulo
-    private boolean estaPulando; //Estado
-    private final int distanciaChao = 400; //altura do solo após pular
-    
-    
-            
-    
-    //construtor
-    public Player (int startX, int startY){
-    this.x  = startX;
-    this.y = startY;
-    this.velocidadeY = 0;  //velocidade do pulo
-    this.estaPulando = false;
-     
+
+    private int x, y;
+    private int velocidadeY;
+    private boolean estaPulando;
+    private final int distanciaChao = 400;
+
+    // NOVO: Vida e invulnerabilidade
+    private int vida = 100;
+    private boolean invulneravel = false;
+
+    public Player(int startX, int startY) {
+        this.x = startX;
+        this.y = startY;
+        this.velocidadeY = 0;
+        this.estaPulando = false;
     }
-    
-    
-    //inicia na posição
+
     public void Update() {
         if (estaPulando) {
-            velocidadeY += 1; //gravidade do pulo
+            velocidadeY += 1; // gravidade
             y += velocidadeY;
-            
-            //faz que o personagem caia no chão e "para de pular"
-            if (y >= distanciaChao){
+
+            if (y >= distanciaChao) {
                 y = distanciaChao;
                 estaPulando = false;
                 velocidadeY = 0;
-                
-                
-            } 
             }
         }
-            public void Pulo (){
-                if (!estaPulando){
-                    estaPulando = true;
-                    velocidadeY = -20; //velocidade do pulo negativa para acrescentar no pulo
-                   }   
-                }
-                public void imprimirPersonagem (Graphics g){ 
-          g.setColor (Color.BLUE);
-          g.fillRect(x, y, 50, 50);
-          
-        
-    
-    
-    
-    
+    }
 
-}
+    public void Pulo() {
+        if (!estaPulando) {
+            estaPulando = true;
+            velocidadeY = -20;
+        }
+    }
+
+    public void imprimirPersonagem(Graphics g) {
+        if (invulneravel) {
+            g.setColor(Color.CYAN); // piscando quando invulnerável
+        } else {
+            g.setColor(Color.BLUE);
+        }
+        g.fillRect(x, y, 50, 50);
+    }
+
+    // ---------------------------
+    // NOVOS MÉTODOS PARA OBSTÁCULOS
+    // ---------------------------
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, 50, 50);
+    }
+
+    public void reduzirVida(int dano) {
+        vida -= dano;
+        if (vida < 0) vida = 0;
+        System.out.println("Vida do player: " + vida);
+    }
+
+    public void setInvulneravel(boolean inv) {
+        invulneravel = inv;
+    }
+
+    public boolean isInvulneravel() {
+        return invulneravel;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+    
 }
