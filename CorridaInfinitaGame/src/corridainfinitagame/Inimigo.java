@@ -1,12 +1,14 @@
 package corridainfinitagame;
 // @author Arthur Machado
-
 import java.awt.Image;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
-public class Inimigo {
+    /*Classe que representa um inimigo no jogo de corrida infinita.
+      Cada inimigo movimenta junto com o cenário (efeito de rolagem).*/
 
+public class Inimigo {
+    
     private Image imagem;
     private int x, y;
     private int largura, altura;
@@ -18,7 +20,7 @@ public class Inimigo {
         this.y = y;
         this.velocidade = velocidadeCenario;
         this.visivel = true;
-        carregarImagemAleatoria();
+       carregarImagemAleatoria();
     }
 
     private void carregarImagemAleatoria() {
@@ -28,16 +30,23 @@ public class Inimigo {
             "src/res/virus2.png",
             "src/res/CavaloTroia.png"
         };
+     
+        
 
-        Random random = new Random();
-        String caminhoEscolhido = imagens[random.nextInt(imagens.length)];
-
-        ImageIcon referencia = new ImageIcon(caminhoEscolhido);
+       Random random = new Random();
+       String caminhoEscolhido = imagens[random.nextInt(imagens.length)];
+        
+        // Carrega a imagem(80x80) para manter proporção
+       ImageIcon referencia = new ImageIcon(caminhoEscolhido);
         imagem = referencia.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         this.altura = 50;
         this.largura = 50;
     }
-
+    //método para detectar colisões com o jogador
+    public java.awt.Rectangle getBounds() {
+    return new java.awt.Rectangle(x, y, largura, altura);
+}
+    //Move o inimigo conforme o cenário (efeito de rolagem)
     public void moverComCenario(int velocidadeCenario) {
         x -= velocidadeCenario;
 
