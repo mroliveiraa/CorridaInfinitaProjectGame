@@ -42,6 +42,12 @@ public class Player {
             } 
             }
         }
+                
+            public java.awt.Rectangle getBounds() {
+    return new java.awt.Rectangle(x, y, 50, 50);
+}
+
+    
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
