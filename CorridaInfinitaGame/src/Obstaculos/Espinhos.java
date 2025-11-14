@@ -3,11 +3,11 @@ package Obstaculos;
 import java.awt.*;
 import javax.swing.*;
 
-public class Lava {
+public class Espinhos {
     private int x, y, largura, altura;
     private Image imagem;
 
-    public Lava(int x, int y, int largura, int altura, String caminhoImagem) {
+    public Espinhos(int x, int y, int largura, int altura, String caminhoImagem) {
         this.x = x;
         this.y = y;
         this.largura = largura;
