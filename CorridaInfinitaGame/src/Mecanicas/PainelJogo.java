@@ -24,6 +24,9 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
     private int backgroundX = 0;
     private ImageIcon gifFundo;
+    private int contadorSpawnInimigo = 0;
+    private int intervaloSpawn = 240; // número de frames entre cada inimigo
+
 
     public PainelJogo() {
         setFocusable(true);
@@ -38,19 +41,18 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
         // inimigos
         inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo(600, 400, velocidadeCenario));
         inimigos.add(new Inimigo(1200, 400, velocidadeCenario));
-        inimigos.add(new Inimigo(2400, 400, velocidadeCenario));
+      
 
         // espinhos
         espinhos = new ArrayList<>();
-        espinhos.add(new Espinhos(900, 430, 40, 40, "/res/espinho.png"));
-        espinhos.add(new Espinhos(1800, 430, 40, 40, "/res/espinho.png"));
+        espinhos.add(new Espinhos(3000, 430, 40, 40, "/res/espinho.png"));
+     
 
         // lava
         lavas = new ArrayList<>();
-        lavas.add(new Lava(1500, 445, 70, 30, "/res/lava.png"));
-        lavas.add(new Lava(2600, 445, 70, 30, "/res/lava.png"));
+        lavas.add(new Lava(7800, 445, 70, 30, "/res/lava.png"));
+        
     }
 
     @Override
@@ -119,8 +121,23 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         verificarColisoes();
 
         repaint();
-    }
+        // contador para spawn de novos inimigos
+        contadorSpawnInimigo++;
+        if (contadorSpawnInimigo >= intervaloSpawn) {
+        contadorSpawnInimigo = 0;
+        int posX = getWidth() + (int)(Math.random() * 300); // aparece fora da tela
+        inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
+        }
+        inimigos.removeIf(i -> i.getX() + i.getImagem().getWidth(null) < 0);//remove inimigos da tela
+        
+if (deveReiniciar){
+    reiniciarJogo();
+    deveReiniciar = false;
+}
 
+
+    }
+private boolean deveReiniciar = false; //corrigir o erro de reinicialização do loop
     private void verificarColisoes() {
 
         // colisão com inimigos
@@ -128,7 +145,8 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
                 timer.stop();
                 JOptionPane.showMessageDialog(this, "💀 Você perdeu! (inimigo) 💀");
-                System.exit(0);
+                deveReiniciar = true;
+                 
             }
         }
 
@@ -138,7 +156,8 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             if (player.getBounds().intersects(r)) {
                 timer.stop();
                 JOptionPane.showMessageDialog(this, "💀 Você perdeu! (espinho) 💀");
-                System.exit(0);
+               deveReiniciar = true;
+               
             }
         }
 
@@ -148,7 +167,8 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             if (player.getBounds().intersects(r)) {
                 timer.stop();
                 JOptionPane.showMessageDialog(this, "🔥 Você caiu na lava! 🔥");
-                System.exit(0);
+                deveReiniciar = true;
+                 
             }
         }
     }
@@ -165,4 +185,32 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {}
+   //autor @Mateus Ribeiro
+    public void reiniciarJogo (){
+        //Reinicia o player
+        player = new Player (100,400);
+        //Reinicia o cenario
+        backgroundX = 0;
+        
+         //Limpa e recria os inimigos
+    inimigos.clear();
+    inimigos.add(new Inimigo(1200, 400, velocidadeCenario));
+  
+
+    // Limpa e recria os espinhos
+    espinhos.clear();
+    espinhos.add(new Espinhos(6000, 430, 40, 40, "/res/espinho.png"));
+    
+
+    // Limpa e recria as lavas
+    lavas.clear();
+    lavas.add(new Lava(4500, 445, 70, 30, "/res/lava.png"));
+   
+
+        
+     //Reinicia o timer
+      timer.start (); 
+       }
 }
+
+

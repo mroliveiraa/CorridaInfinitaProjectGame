@@ -43,7 +43,7 @@ public class TelaInicial extends JPanel {
                   JOptionPane.showMessageDialog(null, "Cancelada.");
                  return;
                   }
-                if (nome.trim().isEmpty()) {
+                if (nome.trim().isEmpty()) { //Se estiver
                   JOptionPane.showMessageDialog(null, "Nome invalido. Tente novamente.");
                       }
 
