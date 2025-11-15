@@ -7,6 +7,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 //author @Mateus Ribeiro
@@ -34,20 +35,35 @@ public class TelaInicial extends JPanel {
               
               //ativar o botão
               btn_iniciar.addActionListener ((ActionEvent e) -> {
-              new TelaSelecaoPersonagem(); //abre a tela de personagem
-              javax.swing.SwingUtilities.getWindowAncestor(this).dispose();//Fecha a tela inicial
-              });
+                  String nome;
+                  do{
+                  nome = JOptionPane.showInputDialog(TelaInicial.this, "Digite o seu nome"); //Abre a janela para digitar nome
+                 //Confere se o nome não está vazio
+                  if (nome == null){
+                  JOptionPane.showMessageDialog(null, "Cancelada.");
+                 return;
+                  }
+                if (nome.trim().isEmpty()) {
+                  JOptionPane.showMessageDialog(null, "Nome invalido. Tente novamente.");
+                      }
+
+     }                while (nome.trim().isEmpty());
+                   JOptionPane.showMessageDialog(TelaInicial.this, "Bem vindo " +nome+" !");
+                   new TelaSelecaoPersonagem(); //abre a tela de personagem
+                  javax.swing.SwingUtilities.getWindowAncestor(TelaInicial.this).dispose(); //Fecha a tela inicial
+        });
+               
                       
-              JButton btn_opcoes = new JButton ("Opcoes");
+              JButton btn_opcoes = new JButton ("Ranking");
               btn_opcoes.setSize(100,250);
               btn_opcoes.setBounds(500, 450, 200, 50);
               add (btn_opcoes);
               
-               //Fundo animado do bg
-        
+         
+          }
               
              
-        
+}
        
        
        
@@ -55,9 +71,9 @@ public class TelaInicial extends JPanel {
        
             
      
-    }
+   
 
-    }
+  
 
    
     
