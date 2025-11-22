@@ -4,6 +4,7 @@ package Personagem;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle; // Importei Rectangle para garantir que não haja erros
 
 public class Player {
     
@@ -29,7 +30,7 @@ public class Player {
     //inicia na posição
     public void Update() {
         if (estaPulando) {
-            velocidadeY += 1; //gravidade do pulo
+            velocidadeY += 1.5; //gravidade do pulo
             y += velocidadeY;
             
             //faz que o personagem caia no chão e "para de pular"
@@ -51,7 +52,7 @@ public class Player {
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
-                    velocidadeY = -20; //velocidade do pulo negativa para acrescentar no pulo
+                    velocidadeY = -25; //velocidade do pulo negativa para acrescentar no pulo
                    }   
                 }
                 public void imprimirPersonagem (Graphics g){ 
