@@ -1,17 +1,15 @@
 package corridainfinitagame;
 
+//@Adan: removido o Inimigo solto que causava lag
 
-
-public class  CorridaInfinitaGame {
+public class CorridaInfinitaGame {
 
     public static void main(String[] args) {
-      
-      Janela jp = new Janela();
-      Inimigo virus = new Inimigo(1300, 600, 5);
-    
-            
-            
-      
+
+        //ativa OpenGL para remover micro travamento no Linux
+        System.setProperty("sun.java2d.opengl", "true");
+
+        //inicia a janela normal
+        Janela jp = new Janela();
     }
-    
 }

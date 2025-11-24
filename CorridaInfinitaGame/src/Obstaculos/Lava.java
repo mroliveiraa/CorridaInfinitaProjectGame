@@ -26,7 +26,7 @@ public class Lava {
     }
 
     public int getX() { return x; }
-    public int getY() { return y; }            // <-- ADICIONADO
+    public int getY() { return y; }           
     public int getLargura() { return largura; }
-    public int getAltura() { return altura; }  // <-- ADICIONADO
+    public int getAltura() { return altura; }  
 }

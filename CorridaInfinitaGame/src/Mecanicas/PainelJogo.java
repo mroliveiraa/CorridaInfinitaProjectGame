@@ -39,10 +39,11 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private int contadorSpawnInimigo = 0;
     private int intervaloSpawn = INTERVALO_SPAWN_BASE;
 
-    //CONTADOR PARA MEUS ESPINHOS
-    private int contadorSpawnEspinho = 0; // contador para criar espinhos
-    private int intervaloEspinhos = 200; // intervalo entre espinhos (básico)
-    // -------------------------------------------------
+    //CONTADOR ESPINHOS
+    private int contadorSpawnEspinho = 0; 
+    private int intervaloEspinhos = 200; 
+
+    private boolean deveReiniciar = false;
 
     public PainelJogo() {
         setFocusable(true);
@@ -51,6 +52,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         player = new Player(100, 400);
 
         timer = new Timer(16, this);
+        
         timer.start();
 
         gifFundo = new ImageIcon("src/res/BackgroundPixelado.gif");
@@ -59,15 +61,13 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         inimigos = new ArrayList<>();
         inimigos.add(new Inimigo(1200, 400, velocidadeCenario));
         
-
-        // espinhos (sua parte)
+        // espinhos
         espinhos = new ArrayList<>();
-        espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png")); // espinho inicial
+        espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png"));
         
         // lava
         lavas = new ArrayList<>();
         lavas.add(new Lava(7800, 445, 70, 30, "/res/lava.png"));
-        
     }
 
     @Override
@@ -152,22 +152,15 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         }
 
         //CRIAR NOVOS ESPINHOS
-        //controla o tempo para criar um novo espinho
         contadorSpawnEspinho++;
-
         if (contadorSpawnEspinho >= intervaloEspinhos) {
             contadorSpawnEspinho = 0;
-
-            //gera espinho fora da tela para entrar andando
             int posX = getWidth() + (int)(Math.random() * 400);
-
-            //cria espinho novo
             espinhos.add(new Espinhos(posX, 400, 70, 70, "/res/espinho.png"));
         }
 
         //remove espinhos que saíram da tela
         espinhos.removeIf(sp -> sp.getX() + sp.getLargura() < 0);
-        // ---------------------------------------------------------
 
         verificarColisoes();
         repaint();
@@ -177,8 +170,6 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             deveReiniciar = false;
         }
     }
-
-    private boolean deveReiniciar = false;
 
     private void verificarColisoes() {
 
@@ -249,12 +240,19 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         inimigos.clear();
         inimigos.add(new Inimigo(1200, 400, velocidadeCenario));
 
-        espinhos.clear(); // reseta seus espinhos
+        espinhos.clear(); 
         espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png"));
 
         lavas.clear();
         lavas.add(new Lava(4500, 445, 70, 30, "/res/lava.png"));
 
         timer.start (); 
+    }
+
+    // método para parar o jogo quando fechar o MAPA1
+    public void pararJogo() {
+        if (timer != null) {
+            timer.stop();  //impede MAPA1 de rodar por trás
+        }
     }
 }
