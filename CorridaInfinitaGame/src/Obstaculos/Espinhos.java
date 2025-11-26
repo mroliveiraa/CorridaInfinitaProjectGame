@@ -13,18 +13,22 @@ public class Espinhos {
         this.largura = largura;
         this.altura = altura;
 
+        //carrega a imagem do espinho com o tamanho certo
         ImageIcon ic = new ImageIcon(getClass().getResource(caminhoImagem));
         this.imagem = ic.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
     }
 
+    // adan - movimento para a esquerda conforme a velocidade do cenário
     public void mover(int velocidade) {
         x -= velocidade;
     }
-
+    
+    // adan - desenha o espinho na tela
     public void desenhar(Graphics g) {
         g.drawImage(imagem, x, y, null);
     }
-
+    
+    // adan - desenha o espinho na tela
     public int getX() { return x; }
     public int getY() { return y; }           
     public int getLargura() { return largura; }

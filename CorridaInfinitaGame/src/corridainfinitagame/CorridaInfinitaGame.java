@@ -1,7 +1,5 @@
 package corridainfinitagame;
 
-//@Adan: removido o Inimigo solto que causava lag
-
 public class CorridaInfinitaGame {
 
     public static void main(String[] args) {

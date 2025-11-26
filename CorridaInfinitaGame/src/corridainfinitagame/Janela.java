@@ -12,9 +12,10 @@ public class Janela extends JFrame {
 
        setLayout(new BorderLayout());
 
-       //@adan: adiciona SOMENTE UMA tela inicial
+       //adiciona somente uma tela inicial
        add(new TelaInicial(), BorderLayout.CENTER);
-
+       //coloca a tela inicial dentro da janela
+       
        setTitle("Run the Program");
        setSize(1280,720);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

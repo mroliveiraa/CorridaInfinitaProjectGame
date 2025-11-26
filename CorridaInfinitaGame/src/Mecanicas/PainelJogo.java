@@ -32,16 +32,16 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private final int FATOR_REDUCAO_DISTANCIA = 20;
     // ----------------------------------------------
 
-    private int velocidadeCenario = 20;
+    private int velocidadeCenario = 10;
 
     private int backgroundX = 0;
     private ImageIcon gifFundo;
     private int contadorSpawnInimigo = 0;
     private int intervaloSpawn = INTERVALO_SPAWN_BASE;
 
-    //CONTADOR ESPINHOS
+    //contador espinhos
     private int contadorSpawnEspinho = 0; 
-    private int intervaloEspinhos = 200; 
+    private int intervaloEspinhos = 450; 
 
     private boolean deveReiniciar = false;
 
@@ -67,7 +67,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         
         // lava
         lavas = new ArrayList<>();
-        lavas.add(new Lava(7800, 445, 70, 30, "/res/lava.png"));
+        lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png"));
     }
 
     @Override
@@ -80,10 +80,18 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         int alturaChao = 450;
         int alturaRestante = getHeight() - alturaChao;
 
-        // chão
+        // chão COM BURACO para a lava 
+        Lava lavaAtual = lavas.get(0); // pega a lava atual
+        int lavaX = lavaAtual.getX();
+        int lavaLargura = lavaAtual.getLargura();
+
+        //chão antes da lava
         g.setColor(Color.BLACK);
-        g.fillRect(backgroundX, alturaChao, getWidth(), alturaRestante);
-        g.fillRect(backgroundX + getWidth(), alturaChao, getWidth(), alturaRestante);
+        g.fillRect(0, alturaChao, lavaX, alturaRestante);
+
+        //chão depois da lava
+        int inicioDepoisLava = lavaX + lavaLargura;
+        g.fillRect(inicioDepoisLava, alturaChao, getWidth() - inicioDepoisLava, alturaRestante);
 
         // personagem
         player.imprimirPersonagem(g);
@@ -97,12 +105,12 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
         // espinhos 
         for (Espinhos e : espinhos) {
-            e.desenhar(g);
+            e.desenhar(g); // desenha o espinho na tela
         }
 
         // lava
         for (Lava l : lavas) {
-            l.desenhar(g);
+            l.desenhar(g); //desenha a lava dentro do buraco
         }
         
         // score
@@ -143,22 +151,52 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             lv.mover(velocidadeCenario);
         }
 
-        // criar novos inimigos
-        contadorSpawnInimigo++;
-        if (contadorSpawnInimigo >= intervaloSpawn) {
-            contadorSpawnInimigo = 0;
-            int posX = getWidth() + (int)(Math.random() * 300);
-            inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
+        // spawn inimigos (equilibrado, evita nascer grudado)
+    contadorSpawnInimigo++;
+    if (contadorSpawnInimigo >= intervaloSpawn) {
+        contadorSpawnInimigo = 0;
+
+        // distância mínima aumentada
+        int posX = getWidth() + 400 + (int)(Math.random() * 300);
+
+        // impede inimigo de nascer colado em espinho
+        if (!espinhos.isEmpty()) {
+            Espinhos ultimo = espinhos.get(espinhos.size() - 1);
+            if (posX - ultimo.getX() < 400) {
+                posX = ultimo.getX() + 400;
+            }
+        }
+        inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
+    }
+
+
+    //Criar espinhos automaticamente, evitando que eles nasçam grudados
+    contadorSpawnEspinho++;
+    if (contadorSpawnEspinho >= intervaloEspinhos) {
+        contadorSpawnEspinho = 0;
+
+        // espinho nasce mais longe
+        int posX = getWidth() + 500 + (int)(Math.random() * 400);
+
+        // impede espinho colado em inimigo
+        if (!inimigos.isEmpty()) {
+            Inimigo ultimo = inimigos.get(inimigos.size() - 1);
+            if (posX - ultimo.getX() < 350) {
+                posX = ultimo.getX() + 350;
+            }
         }
 
-        //CRIAR NOVOS ESPINHOS
-        contadorSpawnEspinho++;
-        if (contadorSpawnEspinho >= intervaloEspinhos) {
-            contadorSpawnEspinho = 0;
-            int posX = getWidth() + (int)(Math.random() * 400);
-            espinhos.add(new Espinhos(posX, 400, 70, 70, "/res/espinho.png"));
+        // impede espinho colado em espinho
+        if (!espinhos.isEmpty()) {
+            Espinhos ultimoEsp = espinhos.get(espinhos.size() - 1);
+            if (posX - ultimoEsp.getX() < 350) {
+                posX = ultimoEsp.getX() + 350;
+            }
         }
-
+        // cria espinho com posição e imagem
+        espinhos.add(new Espinhos(posX, 400, 70, 70, "/res/espinho.png"));
+    }
+   
         //remove espinhos que saíram da tela
         espinhos.removeIf(sp -> sp.getX() + sp.getLargura() < 0);
 
@@ -244,7 +282,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png"));
 
         lavas.clear();
-        lavas.add(new Lava(4500, 445, 70, 30, "/res/lava.png"));
+        lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png")); 
 
         timer.start (); 
     }

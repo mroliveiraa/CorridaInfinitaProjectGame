@@ -3,13 +3,13 @@
 
 package Mecanicas;
 
-import Personagem.PlayerMapa2; //player otimizado para o MAPA 2
+import Personagem.PlayerMapa2;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import corridainfinitagame.InimigoMapa2; //inimigo otimizado MAPA 2
-import Obstaculos.EspinhoMapa2;         //espinho otimizado MAPA 2
+import corridainfinitagame.InimigoMapa2;
+import Obstaculos.EspinhoMapa2;         
 import java.util.ArrayList;
 
 public class PainelJogoMapa2 extends JPanel implements ActionListener, KeyListener {
@@ -23,15 +23,15 @@ public class PainelJogoMapa2 extends JPanel implements ActionListener, KeyListen
 
     // --- VARIÁVEIS DE SCORE E DIFICULDADE ---
     private int score = 0;
-    private final int VELOCIDADE_BASE = 50;
-    private final int FATOR_DIFICULDADE = 100;
+    private final int VELOCIDADE_BASE = 350;
+    private final int FATOR_DIFICULDADE = 50;
 
     // --- VARIÁVEIS DE DISTÂNCIA DINÂMICA ---
     private final int INTERVALO_SPAWN_BASE = 150;
     private final int INTERVALO_SPAWN_MINIMO = 40;
     private final int FATOR_REDUCAO_DISTANCIA = 20;
 
-    private int velocidadeCenario = 20;
+    private int velocidadeCenario = 250;
 
     private ImageIcon fundoMapa2;
 

@@ -10,15 +10,15 @@ public class PlayerMapa2 {
     private int x, y;
 
     // física do pulo
-    private double velocidadeY;
+    private int velocidadeY;  // <- igual do MAPA 1
     private boolean estaPulando;
 
-    // tamanho do personagem
+    // tamanho do player
     private final int largura = 50;
     private final int altura = 50;
 
-    // chão real do MAPA 2 
-    private int chaoRealY;
+    // chão fixo igual ao MAPA 1
+    private final int distanciaChao = 560; //garante que o chão seja fixo
 
     public PlayerMapa2(int startX, int startY) {
         this.x = startX;
@@ -26,49 +26,37 @@ public class PlayerMapa2 {
 
         this.velocidadeY = 0;
         this.estaPulando = false;
-
-        // define o chão real com base no valor 
-        this.chaoRealY = startY;
     }
 
-    // Atualiza pulo e gravidade
+    // Update igual ao MAPA 1
     public void Update() {
 
         if (estaPulando) {
 
-            // gravidade
-            velocidadeY += 1.5;
+            velocidadeY += 1.5; // gravidade igual MAPA 1
             y += velocidadeY;
 
-            // impede o player de atravessar o topo (teto bem alto)
-            if (y < 20) {
-                y = 20;
-                velocidadeY = 0;
-            }
-
-            // impede atravessar o chão
-            if (y >= chaoRealY) {
-                y = chaoRealY;
-                velocidadeY = 0;
+            // impedir cair abaixo do chão
+            if (y >= distanciaChao) {
+                y = distanciaChao;
                 estaPulando = false;
+                velocidadeY = 0;
             }
         }
     }
 
-    // comando de pulo
+    // pulo igual MAPA 1
     public void Pulo() {
         if (!estaPulando) {
             estaPulando = true;
-            velocidadeY = -25; // força do pulo
+            velocidadeY = -25; // força igual do MAPA 1
         }
     }
 
-    // colisão
     public Rectangle getBounds() {
         return new Rectangle(x, y, largura, altura);
     }
 
-    // desenha player
     public void imprimirPersonagem(Graphics g) {
         g.setColor(Color.BLUE);
         g.fillRect(x, y, largura, altura);

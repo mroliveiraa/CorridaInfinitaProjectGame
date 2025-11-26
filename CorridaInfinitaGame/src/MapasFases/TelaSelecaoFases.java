@@ -24,13 +24,13 @@ public class TelaSelecaoFases extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // ======= Título =======
+        // Título
         JLabel txt_titulo = new JLabel("Selecione o Mapa");
         txt_titulo.setBounds(500, 50, 400, 60);
         txt_titulo.setFont(new Font("Comic Sans", Font.BOLD, 30));
         add(txt_titulo);
 
-        // ======= Botão MAPA 1 =======
+        // Botão MAPA 1
         JButton btn_mapa1 = new JButton();
         btn_mapa1.setBounds(250, 125, 350, 200);
 
@@ -46,7 +46,7 @@ public class TelaSelecaoFases extends JFrame {
             dispose();
         });
 
-        // ======= Botão MAPA 2 =======
+        //Botão MAPA 2
         JButton btn_mapa2 = new JButton("Mapa 2");
         btn_mapa2.setBounds(700, 125, 350, 200);
         btn_mapa2.setFont(new Font("Arial", Font.BOLD, 26));

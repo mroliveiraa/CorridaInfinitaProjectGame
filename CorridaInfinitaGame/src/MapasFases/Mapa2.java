@@ -13,7 +13,7 @@ public class Mapa2 extends JFrame {
         // Cria o painel do mapa 2
         PainelJogoMapa2 painel = new PainelJogoMapa2();
 
-        // Usa BorderLayout para o painel preencher tudo corretamente
+        //deixa o painel ocupar toda a janela
         setLayout(new BorderLayout());
         setContentPane(painel);
 

@@ -17,19 +17,19 @@ public class Mapa1 extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
-        // adan - fecha corretamente quando clicar no X
+        //fecha corretamente quando clicar no X
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //adan - cria o painel do jogo (MAPA 1)
+        //cria o painel do jogo
         PainelJogo painel = new PainelJogo();
         setContentPane(painel);
 
-        //adan - quando a janela fechar, para o jogo
+        //quando a janela fechar, para o jogo
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 painel.pararJogo();  
-                // adan - para o timer do MAPA1 (evita o lag no Mapa2)
+                //para o timer do MAPA1 (evita rodar por trás)
             }
         });
 
