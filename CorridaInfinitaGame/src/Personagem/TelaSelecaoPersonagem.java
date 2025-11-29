@@ -5,6 +5,8 @@ import MapasFases.TelaSelecaoFases;
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.URL;
+import java.awt.Font;
+import java.awt.Color;
 //author @Mateus Ribeiro
 
 public class TelaSelecaoPersonagem extends JFrame {
@@ -21,10 +23,26 @@ public class TelaSelecaoPersonagem extends JFrame {
               
         //botão selecionar kai
         JButton btn_personagemKai = new JButton ("Kai");
-        btn_personagemKai.setBounds (325,500,150,50);
+        //Aplicando botão transparente
+        btn_personagemKai.setContentAreaFilled(false);//rem. corpo
+        btn_personagemKai.setBorderPainted(false);//rem. borda
+        btn_personagemKai.setOpaque(false);//Impedimento de pintura de fundo
+        btn_personagemKai.setForeground(Color.red);
+        
+        Font fonte = new Font ("Didot", Font.BOLD, 52);
+        btn_personagemKai.setFont(fonte);
+        btn_personagemKai.setBounds (325,500,150,50);//tamanho
         add (btn_personagemKai);
-         //botão selecionar eli
+       
+        //botão selecionar eli
         JButton btn_personagemEli = new JButton ("Eli");
+        //Aplicando transparêndia
+        btn_personagemEli.setContentAreaFilled(false);//rem. corpo
+        btn_personagemEli.setBorderPainted(false);//rem. borda
+        btn_personagemEli.setOpaque(false);//Impedimento de pintura de fundo
+        btn_personagemEli.setForeground(Color.red);
+        fonte = new Font ("Didot", Font.BOLD, 52);
+        btn_personagemEli.setFont(fonte);
         btn_personagemEli.setBounds (805,500,150,50);
         add (btn_personagemEli);
          //inicia o jogo com o Kai
@@ -47,7 +65,7 @@ public class TelaSelecaoPersonagem extends JFrame {
        
             
         //fundo animado do bg
-        URL location = getClass().getResource("/res/BackgroundPixelado.gif"); //seleciona o local do bg
+        URL location = getClass().getResource("/res/FundoSelect.png.png"); //seleciona o local do bg
      
        ImageIcon gifAnimado = new ImageIcon(location); //instancia o objeto na localização
            
