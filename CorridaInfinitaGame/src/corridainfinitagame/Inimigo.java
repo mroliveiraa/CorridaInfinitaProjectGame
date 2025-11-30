@@ -9,11 +9,12 @@ import javax.swing.ImageIcon;
 
 public class Inimigo {
     
-    private Image imagem;
-    private int x, y;
-    private int largura, altura;
-    private boolean visivel = true;
-    private int velocidade;
+    protected Image imagem;
+    protected int x, y;
+    protected int largura, altura;
+    protected boolean visivel = true;
+    protected int velocidade;
+
    
     public Inimigo(int x, int y, int velocidadeCenario) {
         this.x = x;

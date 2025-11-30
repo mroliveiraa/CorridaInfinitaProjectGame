@@ -64,7 +64,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         
         // espinhos
         espinhos = new ArrayList<>();
-        espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png"));
+        espinhos.add(new Espinhos(3000, 397, 70, 55, "/res/espinho.png"));
         
         // lava
         lavas = new ArrayList<>();
@@ -234,7 +234,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             }
         }
         // cria espinho com posição e imagem
-        espinhos.add(new Espinhos(posX, 400, 70, 70, "/res/espinho.png"));
+        espinhos.add(new Espinhos(posX, 397, 70, 55, "/res/espinho.png"));
     }
    
         //remove espinhos que saíram da tela
@@ -324,7 +324,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         inimigos.add(new Inimigo(1200, 400, velocidadeCenario));
 
         espinhos.clear(); 
-        espinhos.add(new Espinhos(3000, 400, 70, 70, "/res/espinho.png"));
+        espinhos.add(new Espinhos(3000, 397, 70, 55, "/res/espinho.png"));
 
         lavas.clear();
         lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png")); 

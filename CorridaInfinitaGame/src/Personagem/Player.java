@@ -9,12 +9,11 @@ import java.awt.Rectangle; // Importei Rectangle para garantir que não haja err
 public class Player {
     
    //atributos    
-    private int x,y; //posição
-    private int velocidadeY; //velocidade do pulo
-    private boolean estaPulando; //Estado
-    private final int distanciaChao = 400; //altura do solo após pular
-    
-    
+    protected int x, y; //posição
+    protected int velocidadeY;//velocidade do pulo
+    protected boolean estaPulando;//Estado
+    protected final int distanciaChao = 400;//altura do solo após pular
+
             
     
     //construtor

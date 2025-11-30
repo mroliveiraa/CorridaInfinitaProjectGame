@@ -3,45 +3,25 @@ package Obstaculos;
 import java.awt.*;
 import javax.swing.ImageIcon;
 
+// EspinhoMapa2 agora herda os atributos e métodos de Espinhos
+public class EspinhoMapa2 extends Espinhos {
 
-public class EspinhoMapa2 {
-
-    private static Image imagemCache; // imagem carregada 1 vez (economia de memória)
-
-    private int x, y;
-    private int largura, altura;
+    private static Image imagemCache; // carrega só 1x
 
     public EspinhoMapa2(int x, int y, int largura, int altura, String caminhoImagem) {
-        this.x = x;
-        this.y = y;
-        this.largura = largura;
-        this.altura = altura;
-
-        carregarImagemSoUmaVez(caminhoImagem); // adan - carrega a imagem só na primeira vez
+        super(x, y, largura, altura, caminhoImagem); // usa o construtor do pai
+        carregarImagemSoUmaVez(caminhoImagem);
     }
 
-    // evita carregar a mesma imagem toda hora
     private void carregarImagemSoUmaVez(String caminhoImagem) {
-        if (imagemCache != null) return; //se já carregou, não carrega de novo
-
+        if (imagemCache != null) return;
 
         ImageIcon ic = new ImageIcon(getClass().getResource(caminhoImagem));
-        imagemCache = ic.getImage().getScaledInstance(largura, altura, Image.SCALE_FAST);
+        imagemCache = ic.getImage().getScaledInstance(getLargura(), getAltura(), Image.SCALE_FAST);
     }
-    
-    //movimenta o espinho para a esquerda conforme a velocidade do cenário
-    public void mover(int velocidade) {
-        x -= velocidade;
-    }
-    
-    //desenha o espinho na tela
+
+    @Override
     public void desenhar(Graphics g) {
-        g.drawImage(imagemCache, x, y, null);
+        g.drawImage(imagemCache, getX(), getY(), null);
     }
-        
-    // getters simples (usados para colisão e posição)
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getLargura() { return largura; }
-    public int getAltura() { return altura; }
 }

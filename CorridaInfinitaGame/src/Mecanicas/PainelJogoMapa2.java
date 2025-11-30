@@ -69,7 +69,7 @@ public class PainelJogoMapa2 extends JPanel implements ActionListener, KeyListen
 
         // cria lista de espinhos
         espinhos = new ArrayList<>();
-        espinhos.add(new EspinhoMapa2(3000, CHAO_REAL_Y - 40, 70, 70, "/res/espinho.png"));
+        espinhos.add(new EspinhoMapa2(3000, CHAO_REAL_Y - 55, 70, 55, "/res/espinho.png"));
 
     }
 
@@ -146,8 +146,8 @@ public class PainelJogoMapa2 extends JPanel implements ActionListener, KeyListen
 
             espinhos.add(new EspinhoMapa2(
                     getWidth() + (int)(Math.random() * 400),
-                    CHAO_REAL_Y - 40,
-                    70, 70,
+                    CHAO_REAL_Y - 55,
+                    70, 55,
                     "/res/espinho.png"
             ));
         }
@@ -220,7 +220,7 @@ public class PainelJogoMapa2 extends JPanel implements ActionListener, KeyListen
         inimigos.add(new InimigoMapa2(1200, CHAO_REAL_Y - 50, velocidadeCenario));
 
         espinhos.clear();
-        espinhos.add(new EspinhoMapa2(3000, CHAO_REAL_Y - 40, 70, 70, "/res/espinho.png"));
+        espinhos.add(new EspinhoMapa2(3000, CHAO_REAL_Y - 55, 70, 55, "/res/espinho.png"));
 
         timer.start();
     }

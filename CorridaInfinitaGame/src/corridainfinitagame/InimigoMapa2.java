@@ -4,33 +4,27 @@ import java.awt.Image;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+// InimigoMapa2 agora herda de Inimigo
+public class InimigoMapa2 extends Inimigo {
 
-public class InimigoMapa2 {
-
-    private static Image[] imagensCache; // imagens já carregadas
-
-    private Image imagem;
-    private int x, y;
-    private int largura = 50;
-    private int altura = 50;
-    private boolean visivel = true;
-    private int velocidade;
+    private static Image[] imagensCache; // imagens carregadas uma vez só
 
     public InimigoMapa2(int x, int y, int velocidadeCenario) {
-        this.x = x;
-        this.y = y;
-        this.velocidade = velocidadeCenario;
-        this.visivel = true;
+        super(x, y, velocidadeCenario); // chama construtor da classe-mãe
 
         carregarImagensSoUmaVez();
 
-        // escolhe imagem leve da memória
+        // escolhe uma imagem aleatória para o inimigo
         Random rand = new Random();
-        imagem = imagensCache[rand.nextInt(imagensCache.length)];
+        this.imagem = imagensCache[rand.nextInt(imagensCache.length)];
+
+        // garante tamanho
+        this.largura = 50;
+        this.altura = 50;
     }
 
     private static void carregarImagensSoUmaVez() {
-        if (imagensCache != null) return; 
+        if (imagensCache != null) return; // já carregado? então só usa
 
         String[] arquivos = {
             "src/res/worm.png",
@@ -46,18 +40,4 @@ public class InimigoMapa2 {
             imagensCache[i] = ref.getImage().getScaledInstance(80, 80, Image.SCALE_FAST);
         }
     }
-
-    public void moverComCenario(int velocidadeCenario) {
-        x -= velocidadeCenario;
-        if (x + largura < 0) visivel = false;
-    }
-
-    public java.awt.Rectangle getBounds() {
-        return new java.awt.Rectangle(x, y, largura, altura);
-    }
-
-    public Image getImagem() { return imagem; }
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public boolean isVisivel() { return visivel; }
 }
