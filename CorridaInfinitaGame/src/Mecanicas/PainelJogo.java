@@ -78,7 +78,26 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     frame.dispose(); // fecha o jogo
     new TelaSelecaoFases(); // reabre o menu
 }
-    
+    //@Yago
+    private void SalvarPontuacao(){
+        try{
+            BancoDeDados.UsuarioDto lastSave;
+
+            BancoDeDados.UsuarioDao uDao = new BancoDeDados.UsuarioDao();
+
+            lastSave = BancoDeDados.PersistenciaDeDados.Read();
+            
+            if (lastSave.getPontuacao() >= score) return;
+            
+            lastSave.setPontuacao(score);
+
+            BancoDeDados.PersistenciaDeDados.Create(lastSave);
+            uDao.atualizarUsuario(lastSave);
+        }
+        catch (Exception e){
+        
+        }
+    }
     //@Mateus Ribeiro
     private void pausarJogo() {
     timer.stop(); // pausa o jogo
@@ -314,6 +333,7 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     // colisão com inimigos
     for (Inimigo i : inimigos) {
         if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
+            SalvarPontuacao();
             mostrarMenuOpcoes(
                 "Derrota",
                 "💀 Você perdeu!",
@@ -328,6 +348,7 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     for (Espinhos e : espinhos) {
         Rectangle r = new Rectangle(e.getX(), 430, e.getLargura(), 40);
         if (player.getBounds().intersects(r)) {
+            SalvarPontuacao();
             mostrarMenuOpcoes(
                 "Derrota",
                 "💀 Você perdeu!",
@@ -342,6 +363,7 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     for (Lava l : lavas) {
         Rectangle r = new Rectangle(l.getX(), 445, l.getLargura(), 30);
         if (player.getBounds().intersects(r)) {
+            SalvarPontuacao();
             mostrarMenuOpcoes(
                 "Derrota",
                 "🔥 Você caiu na lava! 🔥",
