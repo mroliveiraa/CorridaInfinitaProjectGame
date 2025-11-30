@@ -18,11 +18,7 @@ public class Lava {
         this.imagem = ic.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
     }
 
-    public Lava(int i, int i0) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    //movimento da lava seguindo a velocidade do cenário
+    //movimento da lava seguindo a velocidade do cenário (esquerda)
     public void mover(int velocidade) {
         x -= velocidade;
     }

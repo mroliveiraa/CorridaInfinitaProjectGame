@@ -14,6 +14,15 @@ import java.util.ArrayList;
 
 public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
+    //caminho padrão do mapa 1
+    private String caminhoFundo = "src/res/BackgroundMapa1.png";
+
+    //trocar fundo no mapa 2
+    public void setFundo(String caminho) {
+        this.caminhoFundo = caminho;
+        this.gifFundo = new ImageIcon(caminho);
+    }
+
     private Player player;
     private Timer timer;
     private ArrayList<Inimigo> inimigos;
@@ -36,7 +45,10 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private int velocidadeCenario = 3;
 
     private int backgroundX = 0;
+
+    //agora esse fundo é definido pelo caminhoFundo
     private ImageIcon gifFundo;
+
     private int contadorSpawnInimigo = 0;
     private int intervaloSpawn = INTERVALO_SPAWN_BASE;
 
@@ -47,16 +59,17 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private boolean deveReiniciar = false;
 
     public PainelJogo() {
+
         setFocusable(true);
         addKeyListener(this);
 
         player = new Player(100, 400);
 
         timer = new Timer(16, this);
-        
         timer.start();
 
-        gifFundo = new ImageIcon("src/res/BackgroundMapa1.png");
+        //agora o fundo usa o caminho configurado (mapa1 ou mapa2)
+        gifFundo = new ImageIcon(caminhoFundo);
 
         // inimigos
         inimigos = new ArrayList<>();
@@ -69,17 +82,18 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         // lava
         lavas = new ArrayList<>();
         lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png"));
-        
     }
-       //@Mateus Ribeiro 
+
+    //@Mateus Ribeiro 
     public void voltarMenu() {
-    pararJogo(); // garante que o timer não continue rodando
-    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-    frame.dispose(); // fecha o jogo
-    new TelaSelecaoFases(); // reabre o menu
-}
+        pararJogo(); 
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.dispose(); 
+        new TelaSelecaoFases(); 
+    }
+
     //@Yago
-    private void SalvarPontuacao(){
+    private void SalvarPontuacao() {
         try{
             BancoDeDados.UsuarioDto lastSave;
 
@@ -98,48 +112,44 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         
         }
     }
+
     //@Mateus Ribeiro
     private void pausarJogo() {
-    timer.stop(); // pausa o jogo
+        timer.stop();
 
-    JDialog pauseDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Pause", true);
-    pauseDialog.setSize(300, 200);
-    pauseDialog.setLayout(new GridLayout(3, 1));
-    pauseDialog.setLocationRelativeTo(this);
+        JDialog pauseDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Pause", true);
+        pauseDialog.setSize(300, 200);
+        pauseDialog.setLayout(new GridLayout(3, 1));
+        pauseDialog.setLocationRelativeTo(this);
 
-    JButton btnContinuar = new JButton("Continuar");
-    JButton btnMenu = new JButton("Voltar ao Menu");
-    JButton btnSair = new JButton("Sair do Jogo");
+        JButton btnContinuar = new JButton("Continuar");
+        JButton btnMenu = new JButton("Voltar ao Menu");
+        JButton btnSair = new JButton("Sair do Jogo");
 
-    btnContinuar.addActionListener(e -> {
-        timer.start(); // retoma o jogo
-        pauseDialog.dispose();
-    });
+        btnContinuar.addActionListener(e -> {
+            timer.start();
+            pauseDialog.dispose();
+        });
 
-    btnMenu.addActionListener(e -> {
-        pauseDialog.dispose();
-        voltarMenu(); // método que troca para TelaSelecaoFases
-    });
+        btnMenu.addActionListener(e -> {
+            pauseDialog.dispose();
+            voltarMenu();
+        });
 
-    btnSair.addActionListener(e -> System.exit(0));
+        btnSair.addActionListener(e -> System.exit(0));
 
-    pauseDialog.add(new JLabel("Jogo Pausado", SwingConstants.CENTER));
-    pauseDialog.add(btnContinuar);
-    pauseDialog.add(btnMenu);
-    pauseDialog.add(btnSair);
+        pauseDialog.add(new JLabel("Jogo Pausado", SwingConstants.CENTER));
+        pauseDialog.add(btnContinuar);
+        pauseDialog.add(btnMenu);
+        pauseDialog.add(btnSair);
 
-    pauseDialog.setVisible(true);
-}
-    public PainelJogo(String caminhoFundo) {
-    gifFundo = new ImageIcon(caminhoFundo);
-    // resto da inicialização...
-}
+        pauseDialog.setVisible(true);
+    }
 
     // Métodos de acesso controlado
     public void adicionarInimigo(Inimigo i) { inimigos.add(i); }
     public void adicionarEspinho(Espinhos e) { espinhos.add(e); }
     public void adicionarLava(Lava l) { lavas.add(l); }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -152,15 +162,15 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         int alturaRestante = getHeight() - alturaChao;
 
         // chão COM BURACO para a lava 
-        Lava lavaAtual = lavas.get(0); // pega a lava atual
+        Lava lavaAtual = lavas.get(0); 
         int lavaX = lavaAtual.getX();
         int lavaLargura = lavaAtual.getLargura();
 
-        //chão antes da lava
+        // chão antes da lava
         g.setColor(Color.BLACK);
         g.fillRect(0, alturaChao, lavaX, alturaRestante);
 
-        //chão depois da lava
+        // chão depois da lava
         int inicioDepoisLava = lavaX + lavaLargura;
         g.fillRect(inicioDepoisLava, alturaChao, getWidth() - inicioDepoisLava, alturaRestante);
 
@@ -176,12 +186,12 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
         // espinhos 
         for (Espinhos e : espinhos) {
-            e.desenhar(g); // desenha o espinho na tela
+            e.desenhar(g);
         }
 
         // lava
         for (Lava l : lavas) {
-            l.desenhar(g); //desenha a lava dentro do buraco
+            l.desenhar(g);
         }
         
         // score
@@ -193,7 +203,6 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // dificuldade
         score++;
         velocidadeCenario = calcularVelocidade();
         intervaloSpawn = calcularIntervaloSpawn();
@@ -222,51 +231,45 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             lv.mover(velocidadeCenario);
         }
 
-        // spawn inimigos (equilibrado, evita nascer grudado)
-    contadorSpawnInimigo++;
-    if (contadorSpawnInimigo >= intervaloSpawn) {
-        contadorSpawnInimigo = 0;
+        // spawn inimigos
+        contadorSpawnInimigo++;
+        if (contadorSpawnInimigo >= intervaloSpawn) {
+            contadorSpawnInimigo = 0;
 
-        // distância mínima aumentada
-        int posX = getWidth() + 400 + (int)(Math.random() * 300);
+            int posX = getWidth() + 400 + (int)(Math.random() * 300);
 
-        // impede inimigo de nascer colado em espinho
-        if (!espinhos.isEmpty()) {
-            Espinhos ultimo = espinhos.get(espinhos.size() - 1);
-            if (posX - ultimo.getX() < 400) {
-                posX = ultimo.getX() + 400;
+            if (!espinhos.isEmpty()) {
+                Espinhos ultimo = espinhos.get(espinhos.size() - 1);
+                if (posX - ultimo.getX() < 400) {
+                    posX = ultimo.getX() + 400;
+                }
             }
-        }
-        inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
-    }
-
-
-    //Criar espinhos automaticamente, evitando que eles nasçam grudados
-    contadorSpawnEspinho++;
-    if (contadorSpawnEspinho >= intervaloEspinhos) {
-        contadorSpawnEspinho = 0;
-
-        // espinho nasce mais longe
-        int posX = getWidth() + 500 + (int)(Math.random() * 400);
-
-        // impede espinho colado em inimigo
-        if (!inimigos.isEmpty()) {
-            Inimigo ultimo = inimigos.get(inimigos.size() - 1);
-            if (posX - ultimo.getX() < 350) {
-                posX = ultimo.getX() + 350;
-            }
+            inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
         }
 
-        // impede espinho colado em espinho
-        if (!espinhos.isEmpty()) {
-            Espinhos ultimoEsp = espinhos.get(espinhos.size() - 1);
-            if (posX - ultimoEsp.getX() < 350) {
-                posX = ultimoEsp.getX() + 350;
+        // criar novos espinhos
+        contadorSpawnEspinho++;
+        if (contadorSpawnEspinho >= intervaloEspinhos) {
+            contadorSpawnEspinho = 0;
+
+            int posX = getWidth() + 500 + (int)(Math.random() * 400);
+
+            if (!inimigos.isEmpty()) {
+                Inimigo ultimo = inimigos.get(inimigos.size() - 1);
+                if (posX - ultimo.getX() < 350) {
+                    posX = ultimo.getX() + 350;
+                }
             }
+
+            if (!espinhos.isEmpty()) {
+                Espinhos ultimoEsp = espinhos.get(espinhos.size() - 1);
+                if (posX - ultimoEsp.getX() < 350) {
+                    posX = ultimoEsp.getX() + 350;
+                }
+            }
+
+            espinhos.add(new Espinhos(posX, 397, 70, 55, "/res/espinho.png"));
         }
-        // cria espinho com posição e imagem
-        espinhos.add(new Espinhos(posX, 397, 70, 55, "/res/espinho.png"));
-    }
    
         //remove espinhos que saíram da tela
         espinhos.removeIf(sp -> sp.getX() + sp.getLargura() < 0);
@@ -279,101 +282,96 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             deveReiniciar = false;
         }
     }
-private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoContinuar, Runnable acaoMenu) {
-    JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), titulo, true);
-    dialog.setSize(400, 250);
-    dialog.setLocationRelativeTo(this);
-    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // impede fechar no X
 
-    // Painel com layout absoluto
-    JPanel painel = new JPanel() {
-        ImageIcon fundo = new ImageIcon("src/res/pauseBackground.png");
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(fundo.getImage(), 0, 0, getWidth(), getHeight(), this);
-        }
-    };
-    painel.setLayout(null); // desativa layout automático
-    dialog.setContentPane(painel);
+    private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoContinuar, Runnable acaoMenu) {
+        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), titulo, true);
+        dialog.setSize(400, 250);
+        dialog.setLocationRelativeTo(this);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-    Font fonte = new Font("Press Start 2P", Font.PLAIN, 14);
+        JPanel painel = new JPanel() {
+            ImageIcon fundo = new ImageIcon("src/res/pauseBackground.png");
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fundo.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        painel.setLayout(null);
+        dialog.setContentPane(painel);
 
-    // Mensagem centralizada no topo
-    JLabel lbl = new JLabel(mensagem, SwingConstants.CENTER);
-    lbl.setFont(fonte);
-    lbl.setForeground(Color.WHITE);
-    lbl.setBounds(50, 20, 300, 40); // x, y, largura, altura
-    painel.add(lbl);
+        Font fonte = new Font("Press Start 2P", Font.PLAIN, 14);
 
-    // Botão Continuar
-    JButton btnContinuar = new JButton("▶ Tentar novamente");
-    btnContinuar.setFont(fonte);
-    btnContinuar.setBounds(50, 80, 300, 40);
-    btnContinuar.addActionListener(e -> {
-        dialog.dispose();
-        acaoContinuar.run();
-    });
-    painel.add(btnContinuar);
+        JLabel lbl = new JLabel(mensagem, SwingConstants.CENTER);
+        lbl.setFont(fonte);
+        lbl.setForeground(Color.WHITE);
+        lbl.setBounds(50, 20, 300, 40);
+        painel.add(lbl);
 
-    // Botão Voltar ao Menu
-    JButton btnMenu = new JButton("Voltar ao menu");
-    btnMenu.setFont(fonte);
-    btnMenu.setBounds(50, 140, 300, 40);
-    btnMenu.addActionListener(e -> {
-        dialog.dispose();
-        acaoMenu.run();
-    });
-    painel.add(btnMenu);
+        JButton btnContinuar = new JButton("▶ Tentar novamente");
+        btnContinuar.setFont(fonte);
+        btnContinuar.setBounds(50, 80, 300, 40);
+        btnContinuar.addActionListener(e -> {
+            dialog.dispose();
+            acaoContinuar.run();
+        });
+        painel.add(btnContinuar);
 
-    dialog.setVisible(true);
-}
-   private void verificarColisoes() {
+        JButton btnMenu = new JButton("Voltar ao menu");
+        btnMenu.setFont(fonte);
+        btnMenu.setBounds(50, 140, 300, 40);
+        btnMenu.addActionListener(e -> {
+            dialog.dispose();
+            acaoMenu.run();
+        });
+        painel.add(btnMenu);
 
-    // colisão com inimigos
-    for (Inimigo i : inimigos) {
-        if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
-            SalvarPontuacao();
-            mostrarMenuOpcoes(
-                "Derrota",
-                "💀 Você perdeu!",
-                this::reiniciarJogo,   // ação continuar
-                this::voltarMenu       // ação voltar ao menu
-            );
-            return; // sai do método para não abrir múltiplos menus
-        }
+        dialog.setVisible(true);
     }
 
-    // colisão com espinhos
-    for (Espinhos e : espinhos) {
-        Rectangle r = new Rectangle(e.getX(), 430, e.getLargura(), 40);
-        if (player.getBounds().intersects(r)) {
-            SalvarPontuacao();
-            mostrarMenuOpcoes(
-                "Derrota",
-                "💀 Você perdeu!",
-                this::reiniciarJogo,
-                this::voltarMenu
-            );
-            return;
-        }
-    }
+    private void verificarColisoes() {
 
-    // colisão com lava
-    for (Lava l : lavas) {
-        Rectangle r = new Rectangle(l.getX(), 445, l.getLargura(), 30);
-        if (player.getBounds().intersects(r)) {
-            SalvarPontuacao();
-            mostrarMenuOpcoes(
-                "Derrota",
-                "🔥 Você caiu na lava! 🔥",
-                this::reiniciarJogo,
-                this::voltarMenu
-            );
-            return;
+        for (Inimigo i : inimigos) {
+            if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
+                SalvarPontuacao();
+                mostrarMenuOpcoes(
+                    "Derrota",
+                    "💀 Você perdeu!",
+                    this::reiniciarJogo,
+                    this::voltarMenu
+                );
+                return;
+            }
+        }
+
+        for (Espinhos e : espinhos) {
+            Rectangle r = new Rectangle(e.getX(), 430, e.getLargura(), 40);
+            if (player.getBounds().intersects(r)) {
+                SalvarPontuacao();
+                mostrarMenuOpcoes(
+                    "Derrota",
+                    "💀 Você perdeu!",
+                    this::reiniciarJogo,
+                    this::voltarMenu
+                );
+                return;
+            }
+        }
+
+        for (Lava l : lavas) {
+            Rectangle r = new Rectangle(l.getX(), 445, l.getLargura(), 30);
+            if (player.getBounds().intersects(r)) {
+                SalvarPontuacao();
+                mostrarMenuOpcoes(
+                    "Derrota",
+                    "🔥 Você caiu na lava! 🔥",
+                    this::reiniciarJogo,
+                    this::voltarMenu
+                );
+                return;
+            }
         }
     }
-}
 
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void keyReleased(KeyEvent e) {}
@@ -382,12 +380,10 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
             player.Pulo();
-             }
-              if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-        pausarJogo();
-       
         }
-        
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            pausarJogo();
+        }
     }
 
     private int calcularVelocidade() {
@@ -405,7 +401,7 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
         return Math.max(INTERVALO_SPAWN_MINIMO, novoIntervalo);
     }
     
-    //autor @Mateus Ribeiro
+    //@Mateus Ribeiro
     public void reiniciarJogo (){
         score = 0;
         velocidadeCenario = VELOCIDADE_BASE;
@@ -426,10 +422,9 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
         timer.start (); 
     }
 
-    // método para parar o jogo quando fechar o MAPA1
     public void pararJogo() {
         if (timer != null) {
-            timer.stop();  //impede MAPA1 de rodar por trás
+            timer.stop();
         }
     }
 }
