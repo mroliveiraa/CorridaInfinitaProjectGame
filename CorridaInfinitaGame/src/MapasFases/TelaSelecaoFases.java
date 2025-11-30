@@ -26,8 +26,8 @@ public class TelaSelecaoFases extends JFrame {
 
         // Título
         JLabel txt_titulo = new JLabel("Selecione o Mapa");
-        txt_titulo.setBounds(500, 50, 400, 60);
-        txt_titulo.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        txt_titulo.setBounds(400, 50, 700, 60);
+        txt_titulo.setFont(new Font("Press Start 2P", Font.BOLD, 30));
         add(txt_titulo);
 
         // Botão MAPA 1

@@ -18,6 +18,10 @@ public class Espinhos {
         this.imagem = ic.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
     }
 
+    public Espinhos(int i, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     // adan - movimento para a esquerda conforme a velocidade do cenário
     public void mover(int velocidade) {
         x -= velocidade;

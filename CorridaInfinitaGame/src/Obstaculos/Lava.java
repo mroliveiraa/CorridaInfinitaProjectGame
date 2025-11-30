@@ -17,6 +17,10 @@ public class Lava {
         ImageIcon ic = new ImageIcon(getClass().getResource(caminhoImagem));
         this.imagem = ic.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
     }
+
+    public Lava(int i, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     //movimento da lava seguindo a velocidade do cenário
     public void mover(int velocidade) {

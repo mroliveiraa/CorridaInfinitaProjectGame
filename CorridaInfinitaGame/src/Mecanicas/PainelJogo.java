@@ -23,7 +23,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     
     // --- VARIÁVEIS DE SCORE E DIFICULDADE (ADICIONADAS) ---
     private int score = 0; 
-    private final int VELOCIDADE_BASE = 15;
+    private final int VELOCIDADE_BASE = 5;
     private final int FATOR_DIFICULDADE = 100;
     // -----------------------------------------------------
 
@@ -33,7 +33,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private final int FATOR_REDUCAO_DISTANCIA = 20;
     // ----------------------------------------------
 
-    private int velocidadeCenario = 5;
+    private int velocidadeCenario = 3;
 
     private int backgroundX = 0;
     private ImageIcon gifFundo;
@@ -56,7 +56,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         
         timer.start();
 
-        gifFundo = new ImageIcon("src/res/BackgroundPixelado.gif");
+        gifFundo = new ImageIcon("src/res/BackgroundMapa1.png");
 
         // inimigos
         inimigos = new ArrayList<>();
@@ -69,6 +69,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         // lava
         lavas = new ArrayList<>();
         lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png"));
+        
     }
        //@Mateus Ribeiro 
     public void voltarMenu() {
@@ -110,6 +111,16 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
     pauseDialog.setVisible(true);
 }
+    public PainelJogo(String caminhoFundo) {
+    gifFundo = new ImageIcon(caminhoFundo);
+    // resto da inicialização...
+}
+
+    // Métodos de acesso controlado
+    public void adicionarInimigo(Inimigo i) { inimigos.add(i); }
+    public void adicionarEspinho(Espinhos e) { espinhos.add(e); }
+    public void adicionarLava(Lava l) { lavas.add(l); }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -156,7 +167,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         
         // score
         g.setColor(Color.WHITE); 
-        g.setFont(new Font("Arial", Font.BOLD, 30)); 
+        g.setFont(new Font("Press Start 2P", Font.BOLD, 30)); 
         g.drawString("Score: " + (score / 10), 50, 50);
     }
 
@@ -277,9 +288,9 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     painel.add(lbl);
 
     // Botão Continuar
-    JButton btnContinuar = new JButton("▶ Continuar");
+    JButton btnContinuar = new JButton("▶ Tentar novamente");
     btnContinuar.setFont(fonte);
-    btnContinuar.setBounds(100, 80, 220, 40);
+    btnContinuar.setBounds(50, 80, 300, 40);
     btnContinuar.addActionListener(e -> {
         dialog.dispose();
         acaoContinuar.run();
@@ -287,9 +298,9 @@ private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoCont
     painel.add(btnContinuar);
 
     // Botão Voltar ao Menu
-    JButton btnMenu = new JButton("🏠 Voltar ao menu");
+    JButton btnMenu = new JButton("Voltar ao menu");
     btnMenu.setFont(fonte);
-    btnMenu.setBounds(100, 140, 220, 40);
+    btnMenu.setBounds(50, 140, 300, 40);
     btnMenu.addActionListener(e -> {
         dialog.dispose();
         acaoMenu.run();
