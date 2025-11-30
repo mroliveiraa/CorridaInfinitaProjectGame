@@ -2,6 +2,7 @@
 //classe responsável pelos elementos na tela
 package Mecanicas;
 
+import MapasFases.TelaSelecaoFases;
 import Personagem.Player;
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     
     // --- VARIÁVEIS DE SCORE E DIFICULDADE (ADICIONADAS) ---
     private int score = 0; 
-    private final int VELOCIDADE_BASE = 50;
+    private final int VELOCIDADE_BASE = 15;
     private final int FATOR_DIFICULDADE = 100;
     // -----------------------------------------------------
 
@@ -32,7 +33,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     private final int FATOR_REDUCAO_DISTANCIA = 20;
     // ----------------------------------------------
 
-    private int velocidadeCenario = 10;
+    private int velocidadeCenario = 5;
 
     private int backgroundX = 0;
     private ImageIcon gifFundo;
@@ -69,6 +70,45 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         lavas = new ArrayList<>();
         lavas.add(new Lava(7800, 480, 120, 235, "/res/lava.png"));
     }
+       //@Mateus Ribeiro 
+    public void voltarMenu() {
+    pararJogo(); // garante que o timer não continue rodando
+    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+    frame.dispose(); // fecha o jogo
+    new TelaSelecaoFases(); // reabre o menu
+}
+    //@Mateus Ribeiro
+    private void pausarJogo() {
+    timer.stop(); // pausa o jogo
+
+    JDialog pauseDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Pause", true);
+    pauseDialog.setSize(300, 200);
+    pauseDialog.setLayout(new GridLayout(3, 1));
+    pauseDialog.setLocationRelativeTo(this);
+
+    JButton btnContinuar = new JButton("Continuar");
+    JButton btnMenu = new JButton("Voltar ao Menu");
+    JButton btnSair = new JButton("Sair do Jogo");
+
+    btnContinuar.addActionListener(e -> {
+        timer.start(); // retoma o jogo
+        pauseDialog.dispose();
+    });
+
+    btnMenu.addActionListener(e -> {
+        pauseDialog.dispose();
+        voltarMenu(); // método que troca para TelaSelecaoFases
+    });
+
+    btnSair.addActionListener(e -> System.exit(0));
+
+    pauseDialog.add(new JLabel("Jogo Pausado", SwingConstants.CENTER));
+    pauseDialog.add(btnContinuar);
+    pauseDialog.add(btnMenu);
+    pauseDialog.add(btnSair);
+
+    pauseDialog.setVisible(true);
+}
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -248,7 +288,12 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
             player.Pulo();
+             }
+              if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        pausarJogo();
+       
         }
+        
     }
 
     private int calcularVelocidade() {
