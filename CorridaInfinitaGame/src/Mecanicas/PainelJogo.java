@@ -77,6 +77,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     frame.dispose(); // fecha o jogo
     new TelaSelecaoFases(); // reabre o menu
 }
+    
     //@Mateus Ribeiro
     private void pausarJogo() {
     timer.stop(); // pausa o jogo
@@ -248,38 +249,98 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
             deveReiniciar = false;
         }
     }
+private void mostrarMenuOpcoes(String titulo, String mensagem, Runnable acaoContinuar, Runnable acaoMenu) {
+    JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), titulo, true);
+    dialog.setSize(400, 250);
+    dialog.setLocationRelativeTo(this);
+    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // impede fechar no X
 
-    private void verificarColisoes() {
-
-        // colisão com inimigos
-        for (Inimigo i : inimigos) {
-            if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
-                timer.stop();
-                JOptionPane.showMessageDialog(this, "💀 Você perdeu!💀");
-                deveReiniciar = true;
-            }
+    // Painel com layout absoluto
+    JPanel painel = new JPanel() {
+        ImageIcon fundo = new ImageIcon("src/res/pauseBackground.png");
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(fundo.getImage(), 0, 0, getWidth(), getHeight(), this);
         }
+    };
+    painel.setLayout(null); // desativa layout automático
+    dialog.setContentPane(painel);
 
-        // colisão com espinhos
-        for (Espinhos e : espinhos) {
-            Rectangle r = new Rectangle(e.getX(), 430, e.getLargura(), 40);
-            if (player.getBounds().intersects(r)) {
-                timer.stop();
-                JOptionPane.showMessageDialog(this, "💀 Você perdeu!💀");
-                deveReiniciar = true;
-            }
-        }
+    Font fonte = new Font("Press Start 2P", Font.PLAIN, 14);
 
-        // colisão com lava
-        for (Lava l : lavas) {
-            Rectangle r = new Rectangle(l.getX(), 445, l.getLargura(), 30);
-            if (player.getBounds().intersects(r)) {
-                timer.stop();
-                JOptionPane.showMessageDialog(this, "🔥 Você caiu na lava! 🔥");
-                deveReiniciar = true;
-            }
+    // Mensagem centralizada no topo
+    JLabel lbl = new JLabel(mensagem, SwingConstants.CENTER);
+    lbl.setFont(fonte);
+    lbl.setForeground(Color.WHITE);
+    lbl.setBounds(50, 20, 300, 40); // x, y, largura, altura
+    painel.add(lbl);
+
+    // Botão Continuar
+    JButton btnContinuar = new JButton("▶ Continuar");
+    btnContinuar.setFont(fonte);
+    btnContinuar.setBounds(100, 80, 220, 40);
+    btnContinuar.addActionListener(e -> {
+        dialog.dispose();
+        acaoContinuar.run();
+    });
+    painel.add(btnContinuar);
+
+    // Botão Voltar ao Menu
+    JButton btnMenu = new JButton("🏠 Voltar ao menu");
+    btnMenu.setFont(fonte);
+    btnMenu.setBounds(100, 140, 220, 40);
+    btnMenu.addActionListener(e -> {
+        dialog.dispose();
+        acaoMenu.run();
+    });
+    painel.add(btnMenu);
+
+    dialog.setVisible(true);
+}
+   private void verificarColisoes() {
+
+    // colisão com inimigos
+    for (Inimigo i : inimigos) {
+        if (i.isVisivel() && player.getBounds().intersects(i.getBounds())) {
+            mostrarMenuOpcoes(
+                "Derrota",
+                "💀 Você perdeu!",
+                this::reiniciarJogo,   // ação continuar
+                this::voltarMenu       // ação voltar ao menu
+            );
+            return; // sai do método para não abrir múltiplos menus
         }
     }
+
+    // colisão com espinhos
+    for (Espinhos e : espinhos) {
+        Rectangle r = new Rectangle(e.getX(), 430, e.getLargura(), 40);
+        if (player.getBounds().intersects(r)) {
+            mostrarMenuOpcoes(
+                "Derrota",
+                "💀 Você perdeu!",
+                this::reiniciarJogo,
+                this::voltarMenu
+            );
+            return;
+        }
+    }
+
+    // colisão com lava
+    for (Lava l : lavas) {
+        Rectangle r = new Rectangle(l.getX(), 445, l.getLargura(), 30);
+        if (player.getBounds().intersects(r)) {
+            mostrarMenuOpcoes(
+                "Derrota",
+                "🔥 Você caiu na lava! 🔥",
+                this::reiniciarJogo,
+                this::voltarMenu
+            );
+            return;
+        }
+    }
+}
 
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void keyReleased(KeyEvent e) {}
