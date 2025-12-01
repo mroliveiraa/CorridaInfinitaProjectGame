@@ -29,7 +29,7 @@ public class Player {
     //inicia na posição
     public void Update() {
         if (estaPulando) {
-            velocidadeY += 1.2; //gravidade do pulo
+            velocidadeY += 1.3; //gravidade do pulo
             y += velocidadeY;
             
             //faz que o personagem caia no chão e "para de pular"
@@ -51,7 +51,7 @@ public class Player {
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
-                    velocidadeY = -20; 
+                    velocidadeY = -23; 
                    }   
                 }   
                 public void imprimirPersonagem (Graphics g){ 
