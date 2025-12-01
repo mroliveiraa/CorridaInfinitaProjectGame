@@ -29,7 +29,7 @@ public class Player {
     //inicia na posição
     public void Update() {
         if (estaPulando) {
-            velocidadeY += 1.5; //gravidade do pulo
+            velocidadeY += 1.2; //gravidade do pulo
             y += velocidadeY;
             
             //faz que o personagem caia no chão e "para de pular"
