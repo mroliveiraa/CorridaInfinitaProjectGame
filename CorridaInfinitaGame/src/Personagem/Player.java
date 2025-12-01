@@ -51,9 +51,9 @@ public class Player {
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
-                    velocidadeY = -25; //velocidade do pulo negativa para acrescentar no pulo
+                    velocidadeY = -20; 
                    }   
-                }
+                }   
                 public void imprimirPersonagem (Graphics g){ 
           g.setColor (Color.BLUE);
           g.fillRect(x, y, 50, 50);
