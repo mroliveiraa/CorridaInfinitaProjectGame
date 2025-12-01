@@ -10,9 +10,8 @@ public class UsuarioDao {
     private Connection conexao;
    
     public void cadastrarUsuario (UsuarioDto usuario){
-        conexao = new ConexaoDao().conectarBd();
-        
         try{
+            conexao = new ConexaoDao().conectarBd();
             String sql = "insert into usuario (Nome, Senha, Pontuacao) values (?,?,?)";
         PreparedStatement pstm = conexao.prepareStatement(sql);
             
@@ -22,14 +21,16 @@ public class UsuarioDao {
             
             pstm.execute();
             pstm.close();
-        } catch(SQLException e){
-        
+        } catch(Exception e){
+            if (conexao == null)
+                javax.swing.JOptionPane.showMessageDialog(null, "Banco de dados não conectado");
+            else 
+                javax.swing.JOptionPane.showMessageDialog(null, "erro: "+e);
         }
     }
     public void atualizarUsuario(UsuarioDto usuario){
-        conexao = new ConexaoDao().conectarBd();
-        
         try{
+            conexao = new ConexaoDao().conectarBd();
             String sql = "update usuario set Pontuacao = ? where Name = ? and Senha = ?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             
@@ -39,16 +40,21 @@ public class UsuarioDao {
             
             pstm.executeUpdate();
             pstm.close();
-        } catch(SQLException e){}
+        } catch(Exception e){}
     }
     public ResultSet Listar(){
-        conexao = new ConexaoDao().conectarBd();
-        
         try{
+            conexao = new ConexaoDao().conectarBd();
             String sql = "select * from usuario order by Pontuacao desc";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
             return rs;
-        } catch(SQLException e){return null;}
+        } catch(Exception e){
+            if (conexao == null)
+                javax.swing.JOptionPane.showMessageDialog(null, "Banco de dados não conectado");
+            else 
+                javax.swing.JOptionPane.showMessageDialog(null, "erro: "+e);
+            return null;
+        }
     }
 }
