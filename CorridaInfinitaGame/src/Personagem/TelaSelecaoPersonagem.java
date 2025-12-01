@@ -29,9 +29,9 @@ public class TelaSelecaoPersonagem extends JFrame {
         btn_personagemKai.setOpaque(false);//Impedimento de pintura de fundo
         btn_personagemKai.setForeground(Color.red);
         
-        Font fonte = new Font ("Didot", Font.BOLD, 52);
+        Font fonte = new Font ("Press Start 2P", Font.BOLD, 52);
         btn_personagemKai.setFont(fonte);
-        btn_personagemKai.setBounds (325,500,150,50);//tamanho
+        btn_personagemKai.setBounds (325,500,200,50);//tamanho
         add (btn_personagemKai);
        
         //botão selecionar eli
@@ -41,13 +41,14 @@ public class TelaSelecaoPersonagem extends JFrame {
         btn_personagemEli.setBorderPainted(false);//rem. borda
         btn_personagemEli.setOpaque(false);//Impedimento de pintura de fundo
         btn_personagemEli.setForeground(Color.red);
-        fonte = new Font ("Didot", Font.BOLD, 52);
+        fonte = new Font ("Press Start 2P", Font.BOLD, 52);
         btn_personagemEli.setFont(fonte);
-        btn_personagemEli.setBounds (805,500,150,50);
+        btn_personagemEli.setBounds (805,500,200,50);
         add (btn_personagemEli);
          //inicia o jogo com o Kai
         btn_personagemKai.addActionListener(e -> {
             JOptionPane.showMessageDialog (this, "Você selecionou Kai!");
+            
              new TelaSelecaoFases ();
              dispose ();
            //inicia o jogo com a Eli

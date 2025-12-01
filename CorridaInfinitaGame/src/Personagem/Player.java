@@ -51,7 +51,7 @@ public class Player {
             public void Pulo (){
                 if (!estaPulando){
                     estaPulando = true;
-                    velocidadeY = -23; 
+                    velocidadeY = -26; 
                    }   
                 }   
                 public void imprimirPersonagem (Graphics g){ 

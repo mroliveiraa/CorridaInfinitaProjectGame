@@ -55,6 +55,14 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
     //contador espinhos
     private int contadorSpawnEspinho = 0; 
     private int intervaloEspinhos = 450; 
+    
+    
+    
+    final int DISTANCIA_MINIMA_INIMIGO = 800; // mínimo entre inimigos
+final int DISTANCIA_MINIMA_ESPINHOS = 700; // mínimo entre espinhos
+final int DISTANCIA_MINIMA_ENTRE_OBSTACULOS = 600;
+
+
 
     private boolean deveReiniciar = false;
 
@@ -121,16 +129,16 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         pauseDialog.setSize(300, 200);
         pauseDialog.setLayout(new GridLayout(3, 1));
         pauseDialog.setLocationRelativeTo(this);
-
+//Botoes do menu
         JButton btnContinuar = new JButton("Continuar");
         JButton btnMenu = new JButton("Voltar ao Menu");
         JButton btnSair = new JButton("Sair do Jogo");
-
+//Ação do botão de continue
         btnContinuar.addActionListener(e -> {
             timer.start();
             pauseDialog.dispose();
         });
-
+//Ação do bbotão de pause
         btnMenu.addActionListener(e -> {
             pauseDialog.dispose();
             voltarMenu();
@@ -232,44 +240,52 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         }
 
         // spawn inimigos
-        contadorSpawnInimigo++;
-        if (contadorSpawnInimigo >= intervaloSpawn) {
-            contadorSpawnInimigo = 0;
+       
 
-            int posX = getWidth() + 400 + (int)(Math.random() * 300);
+contadorSpawnInimigo++;
+if (contadorSpawnInimigo >= intervaloSpawn) {
+    contadorSpawnInimigo = 0;
 
-            if (!espinhos.isEmpty()) {
-                Espinhos ultimo = espinhos.get(espinhos.size() - 1);
-                if (posX - ultimo.getX() < 400) {
-                    posX = ultimo.getX() + 400;
-                }
-            }
-            inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
+    int posX = getWidth() + DISTANCIA_MINIMA_INIMIGO + (int)(Math.random() * 600);
+
+    if (!inimigos.isEmpty()) {
+        Inimigo ultimo = inimigos.get(inimigos.size() - 1);
+        if (posX - ultimo.getX() < DISTANCIA_MINIMA_INIMIGO) {
+            posX = ultimo.getX() + DISTANCIA_MINIMA_INIMIGO;
         }
+    }
+
+    inimigos.add(new Inimigo(posX, 400, velocidadeCenario));
+}
 
         // criar novos espinhos
         contadorSpawnEspinho++;
         if (contadorSpawnEspinho >= intervaloEspinhos) {
             contadorSpawnEspinho = 0;
 
-            int posX = getWidth() + 500 + (int)(Math.random() * 400);
+            int posX = getWidth() + DISTANCIA_MINIMA_ESPINHOS + (int)(Math.random() * 500);
 
-            if (!inimigos.isEmpty()) {
-                Inimigo ultimo = inimigos.get(inimigos.size() - 1);
-                if (posX - ultimo.getX() < 350) {
-                    posX = ultimo.getX() + 350;
-                }
-            }
+// Verifica último inimigo
+if (!inimigos.isEmpty()) {
+    Inimigo ultimo = inimigos.get(inimigos.size() - 1);
+    if (Math.abs(posX - ultimo.getX()) < DISTANCIA_MINIMA_ENTRE_OBSTACULOS) {
+        posX = ultimo.getX() + DISTANCIA_MINIMA_ENTRE_OBSTACULOS;
+    }
+}
 
-            if (!espinhos.isEmpty()) {
-                Espinhos ultimoEsp = espinhos.get(espinhos.size() - 1);
-                if (posX - ultimoEsp.getX() < 350) {
-                    posX = ultimoEsp.getX() + 350;
-                }
-            }
+// Verifica último espinho
+if (!espinhos.isEmpty()) {
+    Espinhos ultimoEsp = espinhos.get(espinhos.size() - 1);
+    if (Math.abs(posX - ultimoEsp.getX()) < DISTANCIA_MINIMA_ENTRE_OBSTACULOS) {
+        posX = ultimoEsp.getX() + DISTANCIA_MINIMA_ENTRE_OBSTACULOS;
+    }
+}
+
 
             espinhos.add(new Espinhos(posX, 397, 70, 55, "/res/espinho.png"));
+            
         }
+        
    
         //remove espinhos que saíram da tela
         espinhos.removeIf(sp -> sp.getX() + sp.getLargura() < 0);
@@ -386,14 +402,13 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    private int calcularVelocidade() {
-        int fatorAumento = score / FATOR_DIFICULDADE;
-        int novaVelocidade = VELOCIDADE_BASE + fatorAumento;
-        if (novaVelocidade > 20) {
-            return 20; 
-        }
-        return novaVelocidade;
-    }
+    
+       private int calcularVelocidade() {
+    int incremento = score / 100;
+    int novaVelocidade = VELOCIDADE_BASE + incremento;
+    return Math.min(novaVelocidade, 10); // sempre retorna um int
+}
+
 
     private int calcularIntervaloSpawn() {
         int reducaoAtual = score / FATOR_REDUCAO_DISTANCIA;
