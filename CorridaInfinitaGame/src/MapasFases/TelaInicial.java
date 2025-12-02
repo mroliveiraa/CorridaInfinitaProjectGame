@@ -55,11 +55,11 @@ public class TelaInicial extends JPanel {
                 do{
                     senha = JOptionPane.showInputDialog(TelaInicial.this, "Digite uma senha");
                     if (senha == null){
-                        JOptionPane.showMessageDialog(null, "Cancelada.");
+                        JOptionPane.showMessageDialog(TelaInicial.this, "Cancelada.");
                         return;
                     }
                     if (senha.trim().isEmpty()) { 
-                        JOptionPane.showMessageDialog(null, "Senha invalida. Tente novamente.");
+                        JOptionPane.showMessageDialog(TelaInicial.this, "Senha invalida. Tente novamente.");
                     }
 
                 } while (senha.trim().isEmpty());
@@ -73,10 +73,6 @@ public class TelaInicial extends JPanel {
                    
                    BancoDeDados.PersistenciaDeDados.Create(data);
                    
-                   /*@Yago
-                    Bug: essa parte faz com que o jogador tenha que 
-                    clicar no botão iniciar duas vezes caso o banco de dados fique inativo
-                   */
                    if (LastSave == null)
                     new BancoDeDados.UsuarioDao().cadastrarUsuario(data);
                    
