@@ -10,8 +10,10 @@ public class TelaSelecaoFases extends JFrame {
     // Ícone do botão do mapa 1
     ImageIcon icone1 = new ImageIcon("src/res/BotãoMapa1.png");
 
-    public TelaSelecaoFases() {
-
+    private String personagemSelecionado;
+    
+    public TelaSelecaoFases(String personagemSelecionado) {
+this.personagemSelecionado = personagemSelecionado;
         setTitle("Selecione o Mapa");
 
         // tamanho fixo da tela de seleção
@@ -42,20 +44,20 @@ public class TelaSelecaoFases extends JFrame {
         btn_mapa1.addActionListener(e -> {
 
             //abre mapa 1 e fecha o menu
-            new Mapa1();
+            new Mapa1(personagemSelecionado);
             dispose();
         });
 
         //Botão MAPA 2
         JButton btn_mapa2 = new JButton("Mapa 2");
         btn_mapa2.setBounds(700, 125, 350, 200);
-        btn_mapa2.setFont(new Font("Arial", Font.BOLD, 26));
+        btn_mapa2.setFont(new Font("Press Start 2P", Font.BOLD, 26));
         add(btn_mapa2);
 
         btn_mapa2.addActionListener(e -> {
 
             //abre mapa 2 e fecha o menu
-            new Mapa2();
+            new Mapa2(personagemSelecionado);
             dispose();
         });
 

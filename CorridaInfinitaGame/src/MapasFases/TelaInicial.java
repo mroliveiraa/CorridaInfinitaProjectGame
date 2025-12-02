@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class TelaInicial extends JPanel {
     
        //construtor
-    public TelaInicial(){ //objeto
+    public TelaInicial(){ 
         
        //Titulo pulando
         setLayout (null);

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Rectangle; // Importei Rectangle para garantir que não haja erros
+import java.net.URL;
 
 public class Player {
     
@@ -23,23 +24,33 @@ public class Player {
     
 
 //construtor
-    public Player (int startX, int startY){
+    public Player (int startX, int startY, String skinSelecionada){
     this.x  = startX;
     this.y = startY;
     this.velocidadeY = 0;  //velocidade do pulo
     this.estaPulando = false;
      
-    carregarSprintes();
+    carregarSprintes(skinSelecionada);
     }
     
     //Carregar os frames
-    private void carregarSprintes() {
-        frames = new Image[3];
-        
-        frames[0] = new ImageIcon(getClass().getResource("/res/FrameMov1.png")).getImage();
-        frames[1] = new ImageIcon(getClass().getResource("/res/FrameMov2.png")).getImage();
-        frames[2] = new ImageIcon(getClass().getResource("/res/FrameMov3.png")).getImage();
+  private void carregarSprintes(String skinSelecionada) {
+    frames = new Image[3];
+
+    for (int i = 0; i < 3; i++) {
+        String caminho =  skinSelecionada + "/FrameMov" + (i + 1) + ".png";
+        URL url = getClass().getResource(caminho);
+
+        if (url == null) {
+            System.err.println("Erro: imagem não encontrada → " + caminho);
+            frames[i] = null;
+        } else {
+            frames[i] = new ImageIcon(url).getImage();
+        }
     }
+}
+
+
     
     //Lógica da movimentação
     public void Update() {

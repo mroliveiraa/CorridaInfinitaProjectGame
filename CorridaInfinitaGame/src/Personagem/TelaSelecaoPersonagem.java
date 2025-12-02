@@ -10,7 +10,12 @@ import java.awt.Color;
 //author @Mateus Ribeiro
 
 public class TelaSelecaoPersonagem extends JFrame {
+     private String personagemSelecionado;
+
+    
     public TelaSelecaoPersonagem (){
+        
+
          setTitle ("Selecione o Personagem");
         setSize (1280,720);
         setLayout (null);
@@ -19,7 +24,8 @@ public class TelaSelecaoPersonagem extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout (null);
         
-      
+     
+
               
         //botão selecionar kai
         JButton btn_personagemKai = new JButton ("Kai");
@@ -40,7 +46,7 @@ public class TelaSelecaoPersonagem extends JFrame {
         btn_personagemEli.setContentAreaFilled(false);//rem. corpo
         btn_personagemEli.setBorderPainted(false);//rem. borda
         btn_personagemEli.setOpaque(false);//Impedimento de pintura de fundo
-        btn_personagemEli.setForeground(Color.red);
+        btn_personagemEli.setForeground(Color.blue);
         fonte = new Font ("Press Start 2P", Font.BOLD, 52);
         btn_personagemEli.setFont(fonte);
         btn_personagemEli.setBounds (805,500,200,50);
@@ -49,13 +55,13 @@ public class TelaSelecaoPersonagem extends JFrame {
         btn_personagemKai.addActionListener(e -> {
             JOptionPane.showMessageDialog (this, "Você selecionou Kai!");
             
-             new TelaSelecaoFases ();
+             new TelaSelecaoFases("skinKai");
              dispose ();
            //inicia o jogo com a Eli
              });
         btn_personagemEli.addActionListener(e -> {
             JOptionPane.showMessageDialog (this, "Você selecionou Eli!");
-             new TelaSelecaoFases ();
+             new TelaSelecaoFases ("skinEli");
              dispose ();
             
             });

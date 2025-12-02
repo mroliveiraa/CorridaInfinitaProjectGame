@@ -1,4 +1,4 @@
-//@Mateus Ribeiro
+
 //classe responsável pelos elementos na tela
 package Mecanicas;
 
@@ -16,6 +16,7 @@ public class PainelJogo extends JPanel implements ActionListener, KeyListener {
 
     //caminho padrão do mapa 1
     private String caminhoFundo = "src/res/BackgroundMapa1.png";
+    private final String personagemSelecionado;
 
     //trocar fundo no mapa 2
     public void setFundo(String caminho) {
@@ -66,12 +67,13 @@ final int DISTANCIA_MINIMA_ENTRE_OBSTACULOS = 600;
 
     private boolean deveReiniciar = false;
 
-    public PainelJogo() {
+    public PainelJogo(String personagemSelecionado, String caminhoFundo) {
+this.personagemSelecionado = personagemSelecionado;
 
         setFocusable(true);
         addKeyListener(this);
 
-        player = new Player(100, 400);
+        player = new Player(100, 400,"/res/" + personagemSelecionado);
 
         timer = new Timer(16, this);
         timer.start();
@@ -97,7 +99,7 @@ final int DISTANCIA_MINIMA_ENTRE_OBSTACULOS = 600;
         pararJogo(); 
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.dispose(); 
-        new TelaSelecaoFases(); 
+        new TelaSelecaoFases(personagemSelecionado); 
     }
 
     //@Yago
@@ -422,7 +424,7 @@ if (!espinhos.isEmpty()) {
         velocidadeCenario = VELOCIDADE_BASE;
         intervaloSpawn = INTERVALO_SPAWN_BASE;
 
-        player = new Player (100,400);
+        player = new Player (100,400,"/res/" +personagemSelecionado);
         backgroundX = 0;
         
         inimigos.clear();

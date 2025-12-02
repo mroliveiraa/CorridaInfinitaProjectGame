@@ -5,17 +5,19 @@ import javax.swing.JFrame;
 
 public class Mapa2 extends JFrame {
 
-    public Mapa2() {
+    public Mapa2(String personagemSelecionado) {
 
         setTitle("Mapa 2");
         setSize(1280, 720);
         setLayout(null);
         setResizable(false);
         setLocationRelativeTo(null);
+        String caminhoFundo = "/res/FundoMapa2.png";
 
         // Usa o painel padrão
-        PainelJogo painel = new PainelJogo();
-        
+        PainelJogo painel = new PainelJogo(personagemSelecionado, caminhoFundo);
+        setContentPane(painel);
+
         //fecha corretamente quando clicar no X
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
