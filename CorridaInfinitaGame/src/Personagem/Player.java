@@ -37,11 +37,11 @@ public class Player {
   private void carregarSprintes(String skinSelecionada) {
     frames = new Image[3];
 
-    for (int i = 0; i < 3; i++) {
-        String caminho =  skinSelecionada + "/FrameMov" + (i + 1) + ".png";
+    for (int i = 0; i < 3; i++) {//Vetor para pegar os frames
+        String caminho =  skinSelecionada + "/FrameMov" + (i + 1) + ".png"; //Caminho da imagem "Skin Selecionada" é o metodo que esta guardada as sloms
         URL url = getClass().getResource(caminho);
 
-        if (url == null) {
+        if (url == null) {//Se não encontrar a imagem mostra erro
             System.err.println("Erro: imagem não encontrada → " + caminho);
             frames[i] = null;
         } else {
